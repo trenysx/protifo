@@ -10,14 +10,14 @@
 <div class="transition-opacity duration-500 flex flex-col min-h-screen" [class.opacity-0]="selectedProject()" [class.pointer-events-none]="selectedProject()">
     
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300 border-b border-gray-200" 
+    <!-- FIXED: Removed invalid [class.bg-white/90] binding. Used style binding for transparency or handled via logic below -->
+    <nav class="fixed w-full z-50 transition-all duration-300 border-b border-gray-200 backdrop-blur-md" 
          [class.py-4]="true"
          [class.md:py-6]="!isScrolled() && currentView() === 'home'" 
          [class.md:py-4]="isScrolled() || currentView() !== 'home'"
          [class.bg-white]="isScrolled() || currentView() !== 'home'"
-         [class.bg-white/90]="!isScrolled() && currentView() === 'home'" 
-         [class.backdrop-blur-md]="true"
-         [class.shadow-sm]="isScrolled() || currentView() !== 'home'">
+         [class.shadow-sm]="isScrolled() || currentView() !== 'home'"
+         [style.background-color]="(!isScrolled() && currentView() === 'home') ? 'rgba(255, 255, 255, 0.9)' : ''">
         <div class="container mx-auto px-6 flex justify-between md:justify-center items-center relative">
              <div (click)="navigateTo('home')" class="md:hidden text-lg font-bold font-display uppercase tracking-tighter cursor-pointer relative z-50">
                 Mạnh<span class="text-navy-800">Toàn</span>
