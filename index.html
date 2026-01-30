@@ -6,10 +6,8 @@
     <title>Bùi Mạnh Toàn | Graphic Designer</title>
     <meta name="description" content="Portfolio của Bùi Mạnh Toàn - Sinh viên Thiết kế Đồ họa sáng tạo và nhiệt huyết.">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration -->
     <script>
       tailwind.config = {
         theme: {
@@ -18,13 +16,13 @@
               navy: {
                 50: '#E6EBF2',
                 100: '#CCD8E6',
-                800: '#002B5B', // Primary Accent
-                900: '#001F3F', // Darker Navy
+                800: '#002B5B',
+                900: '#001F3F',
               },
               beige: {
-                100: '#F9F9F7', // Very light background
-                200: '#F5F5DC', // Warm card background
-                300: '#EFE6DD', // Darker beige for hover
+                100: '#F9F9F7',
+                200: '#F5F5DC',
+                300: '#EFE6DD',
               },
             },
             fontFamily: {
@@ -68,13 +66,11 @@
       body { font-family: 'Space Grotesk', sans-serif; }
       h1, h2, h3, h4, .font-display { font-family: 'Chakra Petch', sans-serif; }
       
-      /* Custom Scrollbar */
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: #F0F0F0; }
       ::-webkit-scrollbar-thumb { background: #CCCCCC; }
       ::-webkit-scrollbar-thumb:hover { background: #002B5B; }
 
-      /* Scroll Reveal Utility Classes */
       .reveal {
         opacity: 0;
         transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
@@ -87,717 +83,93 @@
       .reveal.fade-left { transform: translateX(-50px); }
       .reveal.fade-right { transform: translateX(50px); }
       .reveal.zoom-in { transform: scale(0.95); }
-      
-      /* Hide scrollbar when modal is open */
-      body.modal-open { overflow: hidden; }
+
+      /* NOISE OVERLAY */
+      .bg-noise {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+      }
+
+      /* GLITCH EFFECT */
+      .glitch-wrapper {
+        position: relative;
+        display: inline-block; /* Changed from block to inline-block for proper centering */
+      }
+      .glitch {
+        position: relative;
+        color: #000; /* Fallback */
+        display: inline-block;
+      }
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white; /* Matches bg color to hide main text underneath */
+      }
+      .glitch::before {
+        left: 2px;
+        text-shadow: -2px 0 #00ffff;
+        clip-path: inset(24% 0 29% 0);
+        animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+      }
+      .glitch::after {
+        left: -2px;
+        text-shadow: -2px 0 #ff00ff;
+        clip-path: inset(85% 0 13% 0);
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+      }
+      @keyframes glitch-anim-1 {
+        0% { clip-path: inset(80% 0 2% 0); }
+        20% { clip-path: inset(20% 0 60% 0); }
+        40% { clip-path: inset(50% 0 30% 0); }
+        60% { clip-path: inset(10% 0 80% 0); }
+        80% { clip-path: inset(40% 0 10% 0); }
+        100% { clip-path: inset(70% 0 5% 0); }
+      }
+      @keyframes glitch-anim-2 {
+        0% { clip-path: inset(10% 0 80% 0); }
+        20% { clip-path: inset(80% 0 10% 0); }
+        40% { clip-path: inset(30% 0 50% 0); }
+        60% { clip-path: inset(70% 0 20% 0); }
+        80% { clip-path: inset(20% 0 60% 0); }
+        100% { clip-path: inset(50% 0 30% 0); }
+      }
+
+      /* RGB SPLIT HOVER */
+      .rgb-split:hover {
+        animation: rgb-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+      }
+      @keyframes rgb-shake {
+        10%, 90% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+        40%, 60% { transform: translate3d(4px, 0, 0); }
+      }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "recharts": "https://aistudiocdn.com/recharts@^3.4.1",
-    "vite": "https://aistudiocdn.com/vite@^7.2.2",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
+    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
+    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
+    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
+    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
+    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
+    "@angular/common": "https://esm.sh/@angular/common@^21.1.2?external=rxjs",
+    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.2?external=rxjs",
+    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.2?external=rxjs",
+    "@angular/core": "https://esm.sh/@angular/core@^21.1.2?external=rxjs"
   }
 }
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-white text-gray-800 antialiased selection:bg-navy-800 selection:text-white overflow-x-hidden">
-
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 left-0 w-full h-1 z-[60] bg-transparent pointer-events-none">
-      <div id="scroll-bar" class="h-full bg-navy-800 shadow-[0_0_10px_rgba(0,43,91,0.5)] w-0 transition-all duration-100 ease-out"></div>
-    </div>
-
-    <!-- MAIN VIEW WRAPPER -->
-    <div id="main-view" class="transition-opacity duration-500">
-
-        <!-- Navigation -->
-        <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 bg-white/90 backdrop-blur-md border-b border-gray-200">
-            <div class="container mx-auto px-6 flex justify-center items-center relative">
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-10 items-center">
-                    <a href="#about" class="text-sm font-bold tracking-widest uppercase text-gray-800 hover:text-navy-800 transition-colors">Giới thiệu</a>
-                    <a href="#services" class="text-sm font-bold tracking-widest uppercase text-gray-800 hover:text-navy-800 transition-colors">Dịch vụ</a>
-                    <a href="#skills" class="text-sm font-bold tracking-widest uppercase text-gray-800 hover:text-navy-800 transition-colors">Kỹ năng</a>
-                    <a href="#portfolio" class="text-sm font-bold tracking-widest uppercase text-gray-800 hover:text-navy-800 transition-colors">Dự án</a>
-                    <a href="#contact" class="text-sm font-bold tracking-widest uppercase text-gray-800 hover:text-navy-800 transition-colors">Liên hệ</a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden absolute right-6 text-gray-900 hover:text-navy-800">
-                    <i data-lucide="menu"></i>
-                </button>
-            </div>
-
-            <!-- Mobile Dropdown -->
-            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 p-6 flex flex-col space-y-4 shadow-xl">
-                <a href="#about" class="mobile-link text-gray-800 text-lg font-bold font-display uppercase">Giới thiệu</a>
-                <a href="#services" class="mobile-link text-gray-800 text-lg font-bold font-display uppercase">Dịch vụ</a>
-                <a href="#skills" class="mobile-link text-gray-800 text-lg font-bold font-display uppercase">Kỹ năng</a>
-                <a href="#portfolio" class="mobile-link text-gray-800 text-lg font-bold font-display uppercase">Dự án</a>
-                <a href="#contact" class="mobile-link text-gray-800 text-lg font-bold font-display uppercase">Liên hệ</a>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white">
-            <!-- Ambient Background -->
-            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-navy-900/5 rounded-full blur-3xl pointer-events-none translate-x-1/3 -translate-y-1/4"></div>
-            <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-beige-200/60 rounded-full blur-3xl pointer-events-none -translate-x-1/4 translate-y-1/4"></div>
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-70 pointer-events-none"></div>
-
-            <div class="container mx-auto px-6 relative z-10 flex flex-col-reverse md:flex-row items-center gap-12">
-                <div class="md:w-1/2 text-center md:text-left mt-12 md:mt-0 animate-fade-in-up">
-                    <h1 class="text-6xl md:text-9xl font-black text-gray-900 mb-6 font-display uppercase leading-none tracking-tighter">
-                        Creative <br />
-                        <span class="text-navy-800">Designer</span>
-                    </h1>
-                    <h2 class="text-xl md:text-2xl text-gray-600 mb-10 font-light max-w-lg mx-auto md:mx-0 leading-relaxed">
-                        Tôi là <span class="text-navy-800 font-bold">Mạnh Toàn</span>. Designer trẻ với tư duy thiết kế hiện đại và đam mê tạo ra những trải nghiệm số ấn tượng.
-                    </h2>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <a href="#portfolio" class="bg-navy-800 text-white font-bold px-8 py-4 uppercase tracking-wider hover:bg-navy-700 transition-all shadow-lg shadow-navy-800/20 flex items-center justify-center gap-2 group rounded-sm">
-                            Xem dự án <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                        <a href="#" class="border border-gray-300 text-gray-900 font-bold px-8 py-4 uppercase tracking-wider hover:border-navy-800 hover:text-navy-800 transition-colors flex items-center justify-center gap-2 bg-white/80 backdrop-blur-sm rounded-sm">
-                            Download CV <i data-lucide="download" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center md:justify-end animate-fade-in-up relative">
-                    <div class="relative w-64 h-64 md:w-[450px] md:h-[550px]">
-                        <div class="absolute -top-6 -right-6 w-24 h-24 border-t-2 border-r-2 border-navy-800 opacity-20"></div>
-                        <div class="absolute -bottom-6 -left-6 w-24 h-24 border-b-2 border-l-2 border-gray-300 opacity-50"></div>
-                        <div class="absolute inset-0 bg-beige-100 shadow-2xl overflow-hidden">
-                            <img src="https://picsum.photos/600/800?grayscale" alt="Bùi Mạnh Toàn" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity hover:scale-105 duration-700" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Marquee Section -->
-        <div class="relative bg-navy-800 py-6 transform -rotate-1 my-12 md:my-20 z-20 flex flex-col gap-2 overflow-hidden shadow-xl">
-            <div class="flex overflow-hidden">
-                <div class="animate-marquee whitespace-nowrap flex gap-8 font-black text-3xl md:text-5xl uppercase font-display tracking-tighter items-center shrink-0 min-w-full text-white">
-                    Creative Design <span class="text-beige-200">/</span> Web Development <span class="text-beige-200">/</span> UI/UX Interface <span class="text-beige-200">/</span> Branding <span class="text-beige-200">/</span>
-                     Creative Design <span class="text-beige-200">/</span> Web Development <span class="text-beige-200">/</span> UI/UX Interface <span class="text-beige-200">/</span> Branding <span class="text-beige-200">/</span>
-                </div>
-            </div>
-            <div class="h-[1px] bg-white/10 w-full"></div>
-            <div class="flex overflow-hidden">
-                <div class="animate-marquee-reverse whitespace-nowrap flex gap-8 font-black text-3xl md:text-5xl uppercase font-display tracking-tighter items-center shrink-0 min-w-full text-white">
-                    Creative Design <span class="text-beige-200">/</span> Web Development <span class="text-beige-200">/</span> UI/UX Interface <span class="text-beige-200">/</span> Branding <span class="text-beige-200">/</span>
-                     Creative Design <span class="text-beige-200">/</span> Web Development <span class="text-beige-200">/</span> UI/UX Interface <span class="text-beige-200">/</span> Branding <span class="text-beige-200">/</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Section -->
-        <section id="about" class="py-32 bg-white relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
-            <div class="absolute top-1/2 right-0 w-[500px] h-[500px] bg-beige-200/40 blur-[100px] pointer-events-none rounded-full translate-x-1/2 -translate-y-1/2"></div>
-            
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="flex flex-col lg:flex-row items-start gap-16">
-                    <div class="lg:w-5/12 relative reveal fade-right">
-                        <div class="absolute top-4 -left-4 w-full h-full border border-gray-200 z-0 bg-beige-100"></div>
-                        <img src="https://picsum.photos/800/1000?grayscale" alt="About" class="relative z-10 shadow-xl grayscale contrast-125 hover:grayscale-0 transition-all duration-500 object-cover h-[700px] w-full" />
-                        <div class="absolute bottom-10 -left-10 z-20 bg-white border border-gray-200 p-6 shadow-2xl max-w-xs hidden md:block">
-                            <p class="text-4xl font-black text-navy-800 font-display uppercase">Gen Z</p>
-                            <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mt-2">Creative Mindset</p>
-                        </div>
-                    </div>
-                    <div class="lg:w-7/12 pt-4 reveal fade-left">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="h-[1px] w-12 bg-navy-800"></div>
-                            <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">About Me</span>
-                        </div>
-                        <h2 class="text-5xl md:text-7xl font-black text-gray-900 mb-8 font-display leading-none uppercase">
-                            More than just <br/> <span class="text-navy-800">Visuals</span>
-                        </h2>
-                        <div class="space-y-6 text-gray-600 text-lg leading-relaxed mb-10">
-                            <p>Xin chào, tôi là <strong class="text-navy-900">Bùi Mạnh Toàn</strong>. Hiện là sinh viên năm 2 chuyên ngành Thiết kế Đồ họa.</p>
-                            <p>Dù đang ngồi trên ghế nhà trường, tôi luôn chủ động tìm tòi và áp dụng những công nghệ thiết kế mới nhất. Tôi tin rằng sự nhiệt huyết của tuổi trẻ cộng với tư duy thẩm mỹ hiện đại là vũ khí mạnh nhất.</p>
-                        </div>
-                        <div class="relative bg-beige-100/80 border-l-4 border-navy-800 p-8 mb-10">
-                            <div class="absolute -top-4 -left-2 text-navy-800 text-6xl opacity-20 font-serif">"</div>
-                            <p class="text-xl md:text-2xl font-bold text-navy-900 font-display uppercase italic leading-relaxed">
-                                "Học hỏi không ngừng. Sáng tạo không giới hạn. Tôi biến những ý tưởng táo bạo thành hiện thực."
-                            </p>
-                            <div class="mt-4 flex items-center gap-2">
-                                <div class="w-8 h-[1px] bg-navy-800"></div>
-                                <span class="text-xs font-bold uppercase tracking-widest text-navy-800">Triết lý cá nhân</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Core Values -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-gray-200 bg-white/80">
-                            <div class="p-6 border-r border-gray-200 hover:bg-beige-100 transition-colors group">
-                                <i data-lucide="target" class="text-gray-400 mb-4 group-hover:text-navy-800 w-7 h-7"></i>
-                                <h4 class="text-gray-900 font-bold mb-2 font-display uppercase text-sm">Sáng tạo</h4>
-                                <p class="text-[11px] text-gray-600">Luôn tìm kiếm góc nhìn mới mẻ.</p>
-                            </div>
-                            <div class="p-6 border-r border-gray-200 hover:bg-beige-100 transition-colors group">
-                                <i data-lucide="heart" class="text-gray-400 mb-4 group-hover:text-navy-800 w-7 h-7"></i>
-                                <h4 class="text-gray-900 font-bold mb-2 font-display uppercase text-sm">Nhiệt huyết</h4>
-                                <p class="text-[11px] text-gray-600">100% tâm huyết vào từng sản phẩm.</p>
-                            </div>
-                            <div class="p-6 hover:bg-beige-100 transition-colors group">
-                                <i data-lucide="zap" class="text-gray-400 mb-4 group-hover:text-navy-800 w-7 h-7"></i>
-                                <h4 class="text-gray-900 font-bold mb-2 font-display uppercase text-sm">Học hỏi</h4>
-                                <p class="text-[11px] text-gray-600">Không ngại công nghệ mới.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="py-32 bg-beige-100 border-t border-gray-200">
-            <div class="container mx-auto px-6">
-                <div class="mb-20 reveal fade-up">
-                    <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">Services</span>
-                    <h2 class="text-4xl md:text-6xl font-black text-gray-900 mt-2 font-display uppercase">Dịch vụ cung cấp</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Services populated via JS -->
-                    <div id="services-grid" class="contents">
-                       <!-- HTML static fallback in case JS fails, but we will use script to populate -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-32 bg-white relative">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8 reveal fade-up">
-                    <div>
-                        <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">Expertise</span>
-                        <h2 class="text-4xl md:text-6xl font-black text-gray-900 mt-2 font-display uppercase">Kỹ năng</h2>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Software Skills (Left Large Box) -->
-                    <div class="lg:col-span-2 bg-white border border-gray-200 p-8 rounded-sm hover:shadow-lg transition-shadow reveal fade-right">
-                        <h3 class="text-xl font-bold text-gray-900 mb-8 font-display uppercase flex items-center gap-2">
-                             <i data-lucide="cpu" class="text-navy-800"></i> Software Arsenal
-                        </h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="skills-grid">
-                            <!-- Skills populated via JS -->
-                        </div>
-                        
-                        <div class="mt-10 p-6 bg-beige-100 border-l-4 border-navy-800 flex items-start gap-4">
-                            <div>
-                                <h4 class="text-gray-900 font-bold text-lg font-display uppercase">AI Integration</h4>
-                                <p class="text-gray-600 text-sm mt-2 leading-relaxed">
-                                    Sử dụng Midjourney & Stable Diffusion để tối ưu hóa quy trình concept. Tăng hiệu suất 200%.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Learning Path (Right Box) -->
-                    <div class="bg-navy-900 p-8 rounded-sm text-white flex flex-col justify-between relative overflow-hidden reveal fade-left">
-                        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-navy-800 rounded-full opacity-50"></div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-6 font-display uppercase flex items-center gap-2">
-                                <i data-lucide="graduation-cap" class="text-beige-200"></i> Learning Focus
-                            </h3>
-                            <p class="text-gray-300 text-sm mb-8 leading-relaxed">Là một sinh viên, tôi luôn dành 30% thời gian mỗi ngày để cập nhật công nghệ mới:</p>
-                            <div class="space-y-4 relative z-10">
-                                <div class="flex items-center gap-3 p-3 bg-navy-800/50 rounded-sm border border-navy-700">
-                                    <div class="w-2 h-2 bg-beige-200 rounded-full animate-pulse"></div>
-                                    <span class="text-sm font-bold">3D Blender & Cinema 4D</span>
-                                </div>
-                                <div class="flex items-center gap-3 p-3 bg-navy-800/50 rounded-sm border border-navy-700">
-                                    <div class="w-2 h-2 bg-beige-200 rounded-full animate-pulse"></div>
-                                    <span class="text-sm font-bold">Motion Design (After Effects)</span>
-                                </div>
-                                <div class="flex items-center gap-3 p-3 bg-navy-800/50 rounded-sm border border-navy-700">
-                                    <div class="w-2 h-2 bg-beige-200 rounded-full animate-pulse"></div>
-                                    <span class="text-sm font-bold">Generative AI Art</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-6 border-t border-navy-700">
-                            <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Current Status: Learning</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="py-32 bg-white relative overflow-hidden">
-             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-beige-100/50 via-white to-white pointer-events-none"></div>
-             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.05] pointer-events-none"></div>
-             
-             <div class="container mx-auto px-6 relative z-10">
-                 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal fade-right">
-                     <div class="md:max-w-lg">
-                         <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">Selected Works</span>
-                         <h2 class="text-4xl md:text-6xl font-black text-gray-900 mt-2 font-display uppercase leading-tight">
-                             Portfolio <span class="text-navy-800">.</span>
-                         </h2>
-                     </div>
-                     <div class="flex flex-wrap gap-0 border border-gray-200 bg-white shadow-sm" id="portfolio-filters">
-                        <!-- Filters injected via JS -->
-                     </div>
-                 </div>
-                 
-                 <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                     <!-- Projects injected via JS -->
-                 </div>
-
-                 <div class="text-center mt-20 reveal fade-up">
-                    <a href="#" class="inline-flex items-center gap-2 text-gray-500 border-b border-navy-800 pb-1 hover:text-navy-800 transition-colors uppercase text-xs font-bold tracking-widest">
-                        Xem thêm trên Behance <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
-                </div>
-             </div>
-        </section>
-
-        <!-- Process Section -->
-        <section id="process" class="py-32 bg-beige-100 relative overflow-hidden border-t border-gray-200">
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="mb-20 reveal fade-up">
-                    <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">Workflow</span>
-                    <h2 class="text-4xl md:text-6xl font-black text-gray-900 mt-2 font-display uppercase">Quy trình làm việc</h2>
-                </div>
-                <div class="relative">
-                    <div class="hidden lg:block absolute top-8 left-0 w-full h-[1px] bg-gray-300"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8" id="process-grid">
-                        <!-- Process populated via JS -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="py-32 bg-white relative overflow-hidden">
-            <div class="container mx-auto px-6 relative z-10">
-                 <div class="reveal fade-up text-center mb-20">
-                    <h2 class="text-4xl md:text-6xl font-black text-gray-900 font-display uppercase">
-                        Feedback <span class="text-navy-800">/</span> Trust
-                    </h2>
-                 </div>
-                 <!-- Empty Testimonials List Logic: Hidden if empty -->
-                 <div id="testimonials-list" class="hidden grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-                    <!-- Cards injected if data exists -->
-                 </div>
-                 
-                 <!-- Feedback Form -->
-                 <div class="max-w-2xl mx-auto border-t border-gray-100 pt-16 reveal fade-up">
-                     <div class="text-center mb-8">
-                        <span class="text-navy-800 font-bold tracking-widest uppercase text-xs">Your Opinion Matters</span>
-                        <h3 class="text-2xl font-black text-gray-900 mt-2 font-display uppercase">Gửi Feedback của bạn</h3>
-                     </div>
-                     <div class="bg-beige-100 p-2 border border-gray-200 rounded-sm">
-                        <form class="flex flex-col md:flex-row items-stretch gap-2" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã gửi feedback!');">
-                            <input type="text" placeholder="Nhập đánh giá hoặc tin nhắn của bạn..." class="flex-1 bg-white border border-gray-300 px-6 py-4 text-gray-900 focus:outline-none focus:border-navy-800 transition-all placeholder-gray-400 font-medium rounded-sm" />
-                            <button class="bg-navy-800 text-white font-bold px-8 py-4 uppercase tracking-wider hover:bg-navy-700 transition-colors flex items-center justify-center gap-2 group whitespace-nowrap rounded-sm shadow-lg">
-                                <span>Gửi ngay</span> <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </form>
-                     </div>
-                 </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="py-32 bg-navy-900 relative">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-            <div class="container mx-auto px-6 text-center relative z-10 reveal zoom-in">
-                <h2 class="text-6xl md:text-9xl font-black text-white font-display mb-8 leading-[0.8] uppercase tracking-tighter">
-                    Let's Build <br/> <span class="text-transparent bg-clip-text bg-gradient-to-b from-beige-200 to-beige-300">The Future</span>
-                </h2>
-                <p class="text-gray-300 text-lg max-w-xl mx-auto mb-12 font-medium">
-                    Bạn có tầm nhìn. Tôi có giải pháp. Hãy biến ý tưởng thành hiện thực.
-                </p>
-                <a href="#contact" class="inline-flex items-center gap-4 bg-beige-200 text-navy-900 px-12 py-6 font-bold text-lg uppercase tracking-widest hover:bg-white transition-colors rounded-sm shadow-2xl">
-                    Start Project <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </a>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-32 bg-white border-t border-gray-200">
-             <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row gap-16 md:gap-32">
-                    <div class="md:w-5/12 reveal fade-right">
-                        <h2 class="text-5xl font-black text-gray-900 mb-8 font-display uppercase">Liên hệ</h2>
-                        <p class="text-gray-600 mb-12 text-lg leading-relaxed">Gửi email để nhận báo giá chi tiết hoặc trao đổi công việc.</p>
-                        <div class="space-y-8 border-l-2 border-navy-800 pl-8">
-                            <div>
-                                <p class="text-xs text-navy-800 uppercase tracking-widest font-bold mb-1">Email</p>
-                                <a href="mailto:treny35@gmail.com" class="text-2xl font-display font-bold text-gray-900 hover:text-navy-800">treny35@gmail.com</a>
-                            </div>
-                            <div>
-                                <p class="text-xs text-navy-800 uppercase tracking-widest font-bold mb-1">Phone</p>
-                                <a href="tel:+84392399722" class="text-2xl font-display font-bold text-gray-900 hover:text-navy-800">+84 392 399 722</a>
-                            </div>
-                        </div>
-                        <div class="mt-16 flex gap-4">
-                            <a href="#" class="w-12 h-12 border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-navy-800 hover:text-white transition-all rounded-sm"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                            <a href="#" class="w-12 h-12 border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-navy-800 hover:text-white transition-all rounded-sm"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="#" class="w-12 h-12 border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-navy-800 hover:text-white transition-all rounded-sm"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                        </div>
-                    </div>
-                    <div class="md:w-7/12 reveal fade-left">
-                        <form class="space-y-8 bg-beige-100 p-10 rounded-sm border border-gray-200" onsubmit="event.preventDefault(); alert('Tin nhắn đã được gửi!');">
-                            <input type="text" placeholder="Tên của bạn" class="w-full bg-white border border-gray-300 py-4 px-4 rounded-sm focus:border-navy-800 outline-none" />
-                            <input type="email" placeholder="Email" class="w-full bg-white border border-gray-300 py-4 px-4 rounded-sm focus:border-navy-800 outline-none" />
-                            <textarea rows="4" placeholder="Tin nhắn..." class="w-full bg-white border border-gray-300 py-4 px-4 rounded-sm focus:border-navy-800 outline-none"></textarea>
-                            <button class="px-12 py-5 bg-navy-800 text-white font-bold uppercase tracking-widest hover:bg-navy-700 transition-colors w-full md:w-auto rounded-sm shadow-lg">Gửi tin nhắn</button>
-                        </form>
-                    </div>
-                </div>
-             </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="bg-gray-900 border-t border-gray-800 py-12 relative z-10">
-            <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-center md:text-left">
-                    <a href="#" class="text-xl font-bold font-display tracking-tighter block mb-2 uppercase group">
-                        <span class="text-white group-hover:text-gray-300 transition-colors">Mạnh</span>
-                        <span class="text-navy-800 group-hover:text-navy-700 transition-colors">Toàn</span>
-                        <span class="text-gray-500">.</span>
-                    </a>
-                    <p class="text-gray-500 text-xs uppercase tracking-wider font-bold">© 2024 Bùi Mạnh Toàn. All rights reserved.</p>
-                </div>
-                <div class="flex gap-8 text-xs font-bold uppercase tracking-widest text-gray-500">
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Cookies</a>
-                </div>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 bg-gray-800 flex items-center justify-center text-white border border-gray-700 hover:bg-navy-800 transition-colors rounded-sm">
-                    <i data-lucide="arrow-up"></i>
-                </button>
-            </div>
-        </footer>
-    </div>
-
-    <!-- PROJECT DETAIL VIEW (Hidden by default) -->
-    <div id="project-view" class="hidden min-h-screen bg-white text-gray-900 pt-24 pb-20 fixed inset-0 z-[100] overflow-y-auto">
-        <div class="container mx-auto px-6">
-            <div class="mb-8">
-                <button onclick="closeProject()" class="group flex items-center gap-2 text-gray-500 hover:text-navy-800 transition-colors uppercase text-xs font-bold tracking-widest">
-                    <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Quay lại danh sách
-                </button>
-            </div>
-
-            <!-- Detail Content Injected Here -->
-            <div id="detail-content"></div>
-
-            <!-- Bottom Nav -->
-            <div class="border-t border-gray-200 pt-12 flex justify-center mt-12">
-                <p class="text-gray-400 font-mono text-xs">End of Project Showcase</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // --- DATA DEFINITIONS ---
-        const PROJECTS = [
-          {
-            id: 1,
-            title: "Zenith Corporate Website",
-            category: "Web Design",
-            image: "https://picsum.photos/800/600?random=1",
-            description: "Thiết kế website doanh nghiệp hiện đại, tối giản và chuyên nghiệp cho công ty công nghệ.",
-            tools: ["Figma", "Photoshop"],
-            gallery: ["https://picsum.photos/800/600?random=101", "https://picsum.photos/800/600?random=102", "https://picsum.photos/800/600?random=103"]
-          },
-          {
-            id: 2,
-            title: "EcoLife Green Website",
-            category: "E-commerce",
-            image: "https://picsum.photos/800/600?random=2",
-            description: "Giao diện website thương mại điện tử bán các sản phẩm xanh, tập trung vào trải nghiệm mua hàng.",
-            tools: ["Figma", "Adobe XD"],
-            gallery: ["https://picsum.photos/800/600?random=104", "https://picsum.photos/800/600?random=105"]
-          },
-          {
-            id: 3,
-            title: "Neon Event Landing Page",
-            category: "Landing Page",
-            image: "https://picsum.photos/800/600?random=3",
-            description: "Landing page sự kiện âm nhạc với phong cách Cyberpunk, hiệu ứng thị giác mạnh mẽ.",
-            tools: ["Photoshop", "Midjourney"],
-            gallery: ["https://picsum.photos/800/600?random=106", "https://picsum.photos/800/600?random=107"]
-          },
-          {
-            id: 4,
-            title: "Coffee House Brand Identity",
-            category: "Branding",
-            image: "https://picsum.photos/800/600?random=4",
-            description: "Bộ nhận diện thương hiệu số cho chuỗi cà phê, bao gồm website và social media template.",
-            tools: ["Illustrator", "Photoshop"],
-            gallery: ["https://picsum.photos/800/600?random=109", "https://picsum.photos/800/600?random=110"]
-          },
-          {
-            id: 5,
-            title: "Summer Vibes Poster",
-            category: "Print",
-            image: "https://picsum.photos/800/600?random=5",
-            description: "Poster quảng cáo sự kiện mùa hè, màu sắc rực rỡ, bố cục typography táo bạo.",
-            tools: ["Illustrator", "Photoshop"],
-            gallery: ["https://picsum.photos/800/600?random=111", "https://picsum.photos/800/600?random=112"]
-          },
-          {
-            id: 6,
-            title: "Tech Conference Banner",
-            category: "Social Media",
-            image: "https://picsum.photos/800/600?random=6",
-            description: "Bộ banner quảng cáo trên Facebook và LinkedIn cho hội thảo công nghệ.",
-            tools: ["Figma", "Photoshop"],
-            gallery: ["https://picsum.photos/800/600?random=113"]
-          }
-        ];
-
-        const SERVICES = [
-            { title: "Thiết kế Thương hiệu (Branding)", desc: "Logo, bộ nhận diện thương hiệu (danh thiếp, bao bì), brand guideline và tái định vị thương hiệu (Rebranding).", icon: "palette" },
-            { title: "Thiết kế In ấn (Print)", desc: "Thiết kế ấn phẩm in ấn: Tờ rơi, poster, banner, brochure, catalogue, sách, tạp chí.", icon: "printer" },
-            { title: "Quảng cáo & Truyền thông", desc: "Quảng cáo online/offline, banner web, social posts, infographic và email marketing template.", icon: "megaphone" },
-            { title: "Thiết kế Số (UI/UX)", desc: "Giao diện Website, Landing page, App mobile (UI/UX) và các thành phần UI Kit/Component.", icon: "monitor" },
-            { title: "Chuyển động & Video", desc: "Intro/outro video, banner động, animated social posts và video giải thích (Explainer video).", icon: "video" },
-            { title: "Vẽ Minh họa (Illustration)", desc: "Vẽ minh họa, thiết kế nhân vật (mascot), icon set và artwork cho game/app.", icon: "pen-tool" },
-            { title: "Thiết kế Bao bì (Packaging)", desc: "Thiết kế bao bì sản phẩm, nhãn dán, tem và dựng 3D Mockup sản phẩm chuyên nghiệp.", icon: "package" },
-            { title: "Tư vấn & Chiến lược", desc: "Tư vấn chiến lược hình ảnh thương hiệu và thiết kế trải nghiệm khách hàng (UX Strategy).", icon: "trending-up" }
-        ];
-
-        const SKILLS = [
-            { name: 'Adobe Illustrator', level: 90, icon: 'pen-tool' },
-            { name: 'Adobe Photoshop', level: 85, icon: 'image' },
-            { name: 'Figma (Web Design)', level: 95, icon: 'figma' },
-            { name: 'Adobe XD', level: 70, icon: 'layout-template' },
-            { name: 'Webflow / WordPress', level: 60, icon: 'globe' },
-            { name: 'Midjourney / AI Tools', level: 80, icon: 'sparkles' },
-        ];
-
-        const PROCESS = [
-            { id: 1, title: 'Nghiên cứu & Khám phá', desc: 'Hiểu yêu cầu dự án, khách hàng, mục tiêu sản phẩm. Nghiên cứu thị trường, đối thủ, xu hướng, người dùng. Thu thập thông tin, hình ảnh, tài liệu tham khảo.', icon: 'search' },
-            { id: 2, title: 'Lên ý tưởng (Ideation / Concept)', desc: 'Brainstorm các ý tưởng thiết kế. Vẽ sketch, mindmap, moodboard. Xác định hướng đi tổng thể cho dự án.', icon: 'lightbulb' },
-            { id: 3, title: 'Phát triển thiết kế (Design Development)', desc: 'Chọn ý tưởng tốt nhất để phát triển. Dùng phần mềm (Photoshop, Illustrator, CAD…) để tạo prototype, layout, mockup. Thử nghiệm màu sắc, bố cục.', icon: 'monitor' },
-            { id: 4, title: 'Thử nghiệm & Hoàn thiện', desc: 'Lấy phản hồi từ khách hàng hoặc người dùng thử. Sửa lỗi, điều chỉnh chi tiết. Tối ưu hóa thiết kế cho sản xuất hoặc triển khai.', icon: 'sliders' },
-            { id: 5, title: 'Triển khai & Bàn giao', desc: 'Chuẩn bị file, mẫu, hướng dẫn kỹ thuật. Bàn giao cho khách hàng hoặc nhà sản xuất. Theo dõi quá trình áp dụng.', icon: 'rocket' },
-        ];
-
-        // --- RENDER FUNCTIONS ---
-
-        function renderServices() {
-            const container = document.getElementById('services-grid');
-            container.innerHTML = SERVICES.map((service, index) => `
-                <div class="reveal fade-up" style="transition-delay: ${index * 100}ms">
-                    <div class="group h-full bg-white p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:border-navy-800 transition-all duration-300 flex flex-col rounded-sm">
-                        <div class="w-12 h-12 bg-beige-200 flex items-center justify-center mb-6 group-hover:bg-navy-800 transition-colors duration-300 rounded-sm shrink-0">
-                            <i data-lucide="${service.icon}" class="text-gray-600 group-hover:text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-display uppercase tracking-tight">${service.title}</h3>
-                        <p class="text-gray-600 leading-relaxed mb-6 text-xs md:text-sm">${service.desc}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderSkills() {
-            const container = document.getElementById('skills-grid');
-            container.innerHTML = SKILLS.map((skill, index) => `
-                 <div class="flex flex-col items-center p-4 border border-gray-100 hover:border-navy-800 rounded-sm transition-all group relative">
-                    <div class="absolute -top-8 opacity-0 group-hover:opacity-100 transition-opacity bg-navy-800 text-white text-[10px] px-2 py-1 font-bold uppercase rounded-sm whitespace-nowrap pointer-events-none">${skill.name}</div>
-                    <i data-lucide="${skill.icon}" class="w-8 h-8 text-gray-400 group-hover:text-navy-800 mb-2 transition-transform group-hover:scale-110"></i>
-                    <span class="font-bold text-sm text-gray-900">${skill.name.split(' ')[0]}</span>
-                    <div class="w-full bg-gray-100 h-1 mt-2 rounded-full overflow-hidden"><div class="bg-navy-800 h-1" style="width: ${skill.level}%"></div></div>
-                </div>
-            `).join('');
-        }
-
-        function renderProcess() {
-            const container = document.getElementById('process-grid');
-            container.innerHTML = PROCESS.map((step, index) => `
-                <div class="reveal fade-up" style="transition-delay: ${index * 200}ms">
-                    <div class="relative group">
-                        <div class="flex md:mb-10 mb-4">
-                            <div class="w-16 h-16 bg-white border border-gray-300 flex items-center justify-center group-hover:border-navy-800 group-hover:bg-navy-800 transition-all duration-500 relative z-10 shadow-md">
-                                <i data-lucide="${step.icon}" class="text-gray-400 group-hover:text-white transition-colors"></i>
-                                <div class="absolute -top-3 -right-3 w-6 h-6 bg-navy-800 text-white flex items-center justify-center font-bold text-xs shadow-sm">${step.id}</div>
-                            </div>
-                        </div>
-                        <div class="pr-4">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 font-display uppercase min-h-[56px]">${step.title}</h3>
-                            <p class="text-gray-600 text-xs leading-relaxed">${step.desc}</p>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        let currentCategory = 'All';
-        const CATEGORIES = ['All', 'Web Design', 'Landing Page', 'E-commerce', 'Branding', 'Print'];
-
-        function renderPortfolio() {
-            // Render Filters
-            const filterContainer = document.getElementById('portfolio-filters');
-            filterContainer.innerHTML = CATEGORIES.map(cat => `
-                <button onclick="filterProjects('${cat}')" class="px-6 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-300 border-r border-gray-200 last:border-r-0 ${currentCategory === cat ? 'bg-navy-800 text-white' : 'bg-transparent text-gray-500 hover:text-navy-800 hover:bg-beige-100'}">
-                    ${cat}
-                </button>
-            `).join('');
-
-            // Render Grid
-            const gridContainer = document.getElementById('portfolio-grid');
-            const filtered = currentCategory === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === currentCategory);
-            
-            gridContainer.innerHTML = filtered.map((project, index) => `
-                <div class="group relative bg-white border border-gray-200 hover:border-navy-800 hover:shadow-lg transition-all rounded-sm flex flex-col reveal fade-up" style="transition-delay: ${index * 100}ms">
-                    <div class="h-64 overflow-hidden bg-gray-100 relative cursor-pointer" onclick="openProject(${project.id})">
-                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0">
-                         <div class="absolute inset-0 bg-navy-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <span class="border border-white px-6 py-3 text-white font-bold uppercase tracking-widest text-xs">View Case Study</span>
-                        </div>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <span class="text-[10px] font-bold text-navy-800 uppercase tracking-widest border border-navy-100 bg-navy-50 px-2 py-1 w-fit mb-3">${project.category}</span>
-                        <h3 class="text-xl font-black text-gray-900 mb-2 font-display uppercase">${project.title}</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">${project.description}</p>
-                        <button onclick="openProject(${project.id})" class="mt-auto w-full py-3 bg-gray-50 border border-gray-200 hover:bg-navy-800 hover:text-white text-xs font-bold uppercase tracking-widest transition-all rounded-sm flex items-center justify-center gap-2 group/btn">
-                            View More <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Re-init icons for newly added elements
-            lucide.createIcons();
-            
-            // Re-trigger scroll reveal for new elements
-            setTimeout(initScrollReveal, 100); 
-        }
-
-        function filterProjects(category) {
-            currentCategory = category;
-            renderPortfolio();
-        }
-
-        // --- VIEW LOGIC (PROJECT DETAIL) ---
-        function openProject(id) {
-            const project = PROJECTS.find(p => p.id === id);
-            if (!project) return;
-
-            const detailContainer = document.getElementById('detail-content');
-            detailContainer.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16 animate-fade-in-up">
-                    <div class="lg:col-span-2">
-                        <span class="inline-block px-3 py-1 mb-4 border border-navy-800 text-navy-800 text-[10px] uppercase font-bold tracking-widest">${project.category}</span>
-                        <h1 class="text-4xl md:text-6xl font-black font-display uppercase leading-none mb-6">${project.title}</h1>
-                        <p class="text-gray-600 text-lg leading-relaxed">${project.description}</p>
-                    </div>
-                    <div class="lg:col-span-1 flex flex-col justify-end">
-                        <div class="p-6 border border-gray-200 bg-beige-100 rounded-sm">
-                            <h3 class="text-navy-800 font-bold uppercase text-xs tracking-widest mb-4 border-b border-gray-300 pb-2">Thông tin dự án</h3>
-                            <div class="space-y-4">
-                                <div><span class="text-gray-500 text-xs uppercase block mb-1">Tools</span><div class="flex flex-wrap gap-2">${project.tools.map(t => `<span class="text-gray-700 font-mono text-xs bg-white border border-gray-200 px-2 py-1">${t}</span>`).join('')}</div></div>
-                                <button class="w-full mt-4 bg-navy-800 text-white font-bold uppercase text-xs py-3 tracking-widest hover:bg-navy-700 transition-colors rounded-sm">Visit Live Site</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full h-[50vh] md:h-[70vh] mb-12 overflow-hidden border border-gray-200 shadow-lg animate-fade-in-up">
-                    <img src="${project.image}" class="w-full h-full object-cover" />
-                </div>
-                <div class="mb-20">
-                     <div class="flex items-center gap-4 mb-8"><div class="h-[1px] w-12 bg-navy-800"></div><span class="text-gray-900 font-bold tracking-widest uppercase text-sm font-display">Gallery</span><div class="h-[1px] flex-grow bg-gray-200"></div></div>
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        ${project.gallery ? project.gallery.map((img, i) => `
-                            <div class="group relative overflow-hidden border border-gray-200 bg-gray-50 rounded-sm shadow-sm">
-                                <img src="${img}" class="w-full h-auto object-cover transition-all duration-500 grayscale group-hover:grayscale-0" />
-                            </div>
-                        `).join('') : ''}
-                     </div>
-                </div>
-            `;
-
-            document.getElementById('main-view').classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                document.getElementById('main-view').classList.add('hidden');
-                document.getElementById('project-view').classList.remove('hidden');
-                lucide.createIcons(); // Icons inside detail view
-            }, 500);
-        }
-
-        function closeProject() {
-            document.getElementById('project-view').classList.add('hidden');
-            document.getElementById('main-view').classList.remove('hidden', 'pointer-events-none');
-            setTimeout(() => {
-                document.getElementById('main-view').classList.remove('opacity-0');
-            }, 10);
-            window.scrollTo(0, 0);
-        }
-
-        // --- SCROLL REVEAL LOGIC ---
-        function initScrollReveal() {
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            reveals.forEach(el => observer.observe(el));
-        }
-
-        // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            renderServices();
-            renderSkills();
-            renderProcess();
-            renderPortfolio();
-            
-            lucide.createIcons();
-            initScrollReveal();
-
-            // Mobile Menu
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const links = document.querySelectorAll('.mobile-link');
-            
-            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-            links.forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
-
-            // Scroll Progress & Navbar
-            const navbar = document.getElementById('navbar');
-            const scrollBar = document.getElementById('scroll-bar');
-
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('shadow-sm', 'py-4');
-                    navbar.classList.remove('py-6');
-                } else {
-                    navbar.classList.remove('shadow-sm', 'py-4');
-                    navbar.classList.add('py-6');
-                }
-
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                if(scrollBar) scrollBar.style.width = scrolled + "%";
-            });
-        });
-    </script>
-<script type="module" src="/index.tsx"></script>
+    <app-root></app-root>
 </body>
 </html>
