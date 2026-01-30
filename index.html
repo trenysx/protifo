@@ -6,7 +6,7 @@
     <title>Bùi Mạnh Toàn | Graphic Designer</title>
     <meta name="description" content="Portfolio của Bùi Mạnh Toàn - Sinh viên Thiết kế Đồ họa sáng tạo và nhiệt huyết.">
     
-    <!-- Tailwind CSS (CDN for Simplicity in this setup) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -173,6 +173,7 @@
 </head>
 <body class="bg-white text-gray-800 antialiased selection:bg-navy-800 selection:text-white overflow-x-hidden">
     <app-root></app-root>
-    <!-- Entry point for Vite Build -->
-    </body>
+    <!-- FIX: Use relative path ./ instead of absolute / -->
+    <script type="module" src="./index.tsx"></script>
+</body>
 </html>
